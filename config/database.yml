@@ -86,7 +86,7 @@ production:
     password: <%= ENV["GRADITUDE_DATABASE_PASSWORD"] %>
   cache: 
     <<: *default
-    database: database_production_cache
+    database: graditude_production_cache
     migrations_paths: db/cache_migrate
 
 
