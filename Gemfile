@@ -53,3 +53,5 @@ end
 gem "inertia_rails", "~> 3.8"
 
 gem "vite_rails", "~> 3.0"
+
+gem "solid_cache", "~> 1.0"
