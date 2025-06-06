@@ -12,8 +12,8 @@ const theme = createTheme({
 
 export function RootLayout({ children }: PropsWithChildren) {
   return (
-    <MantineProvider>
-      <Notifications />
+    <MantineProvider theme={theme}>
+      <Notifications autoClose={4000} />
       <FlashLayout>{children}</FlashLayout>
     </MantineProvider>
   );

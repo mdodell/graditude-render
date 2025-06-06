@@ -1,11 +1,11 @@
-class Identity::EmailVerificationsController < ApplicationController
+class Identity::EmailVerificationsController < InertiaController
   skip_before_action :authenticate, only: :show
 
   before_action :set_user, only: :show
 
   def show
     @user.update! verified: true
-    redirect_to root_path, notice: "Thank you for verifying your email address"
+    redirect_to root_path, notice: "Your email address has been verified"
   end
 
   def create
