@@ -1,0 +1,2 @@
+module InertiaHelper
+end

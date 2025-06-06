@@ -14,7 +14,7 @@ gem "jbuilder"
 # gem "redis", ">= 4.0.1"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
+gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
@@ -55,3 +55,7 @@ gem "inertia_rails", "~> 3.8"
 gem "vite_rails", "~> 3.0"
 
 gem "solid_cache", "~> 1.0"
+
+gem "authentication-zero", "~> 4.0"
+
+gem "js-routes", "~> 2.3"

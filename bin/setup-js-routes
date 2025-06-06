@@ -1,0 +1,4 @@
+#!/bin/bash
+bin/rails js:routes
+# Keep the process running
+tail -f /dev/null 

@@ -1,0 +1,31 @@
+class RegistrationsController < InertiaController
+  skip_before_action :authenticate, only: %i[new create]
+  before_action :require_no_authentication, only: %i[new create]
+
+  def new
+    render inertia: 'Register'
+  end
+
+  def create
+    @user = User.new(user_params)
+
+    if @user.save
+      session_record = @user.sessions.create!
+      cookies.signed.permanent[:session_token] = { value: session_record.id, httponly: true }
+
+      send_email_verification
+      redirect_to root_path, notice: "Welcome! You have signed up successfully"
+    else
+      redirect_to register_path, inertia: inertia_errors(@user)
+    end
+  end
+
+  private
+    def user_params
+      params.permit(:email, :password, :password_confirmation)
+    end
+
+    def send_email_verification
+      UserMailer.with(user: @user).email_verification.deliver_later
+    end
+end

@@ -20,4 +20,5 @@ if gem list --no-installed --exact --silent foreman; then
   gem install foreman
 fi
 
-foreman start -f Procfile.dev "$@"
+foreman start -f Procfile.dev -m all=1,web=0 <&0 &
+bin/rails server "$@"

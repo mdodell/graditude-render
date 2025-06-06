@@ -2,16 +2,31 @@
   "private": true,
   "type": "module",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.33.0",
+    "@typescript-eslint/parser": "^8.33.0",
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.4.1",
+    "postcss": "^8.5.4",
+    "postcss-preset-mantine": "^1.17.0",
+    "postcss-simple-vars": "^7.0.1",
+    "prettier": "^3.5.3",
     "vite": "^5.4.19",
     "vite-plugin-ruby": "^5.1.1"
   },
   "dependencies": {
     "@inertiajs/react": "^2.0.11",
+    "@mantine/core": "^8.0.2",
+    "@mantine/form": "^8.0.2",
+    "@mantine/hooks": "^8.0.2",
+    "@mantine/notifications": "^8.0.2",
+    "@tabler/icons-react": "^3.33.0",
     "@types/react": "^19.1.4",
     "@types/react-dom": "^19.1.5",
     "@vitejs/plugin-react": "^4.4.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "spin-delay": "^2.0.1",
     "typescript": "^5.8.3"
   },
   "scripts": {
