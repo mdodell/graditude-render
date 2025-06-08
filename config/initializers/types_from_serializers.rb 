@@ -1,0 +1,6 @@
+if Rails.env.development?
+  TypesFromSerializers.config do |config|
+    config.name_from_serializer = ->(name) { name }
+    config.output_dir = app/frontend/types/serializers"
+  end
+end
