@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get    'login',    to: 'sessions#new'
   post   'login',    to: 'sessions#create'
   delete 'logout/:id', to: 'sessions#destroy', as: 'logout'
-
+  # API routes
   # Password management
   resource :password, only: [:edit, :update]
 

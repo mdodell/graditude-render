@@ -1,4 +1,5 @@
 require "active_support/core_ext/integer/time"
+require "types_from_serializers/generator"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -73,4 +74,8 @@ Rails.application.configure do
   # Automatically update js-routes file
   # when routes.rb is changed
   config.middleware.use(JsRoutes::Middleware)
+
+  config.after_initialize do
+    TypesFromSerializers.generate(force: true)
+  end
 end

@@ -1,4 +1,4 @@
-import { Box, Flex, Paper, Title, Text, Grid } from '@mantine/core';
+import { Flex, Paper, Title, Text, Grid } from '@mantine/core';
 import { PropsWithChildren, ReactEventHandler, ReactNode } from 'react';
 
 interface AuthLayoutProps {
