@@ -75,7 +75,4 @@ Rails.application.configure do
   # when routes.rb is changed
   config.middleware.use(JsRoutes::Middleware)
 
-  config.after_initialize do
-    TypesFromSerializers.generate(force: true)
-  end
 end
