@@ -11,7 +11,7 @@ class RegistrationsController < InertiaController
 
     if @user.save
       session_record = @user.sessions.create!
-      cookies.signed.permanent[:session_token] = { value: session_record.id, httponly: true }
+      set_session_cookie(params[:remember_me])
 
       send_email_verification
       redirect_to root_path, notice: "Welcome! You have signed up successfully"
@@ -28,4 +28,23 @@ class RegistrationsController < InertiaController
     def send_email_verification
       UserMailer.with(user: @user).email_verification.deliver_later
     end
+
+    def set_session_cookie
+        if remember_me
+          cookies.signed.permanent[:session_token] = {
+            value: @session.id,
+            httponly: true,
+            secure: Rails.env.production?,
+            same_site: :lax
+          }
+        else
+          cookies.signed[:session_token] = {
+            value: @session.id,
+            httponly: true,
+            secure: Rails.env.production?,
+            same_site: :lax,
+            expires: 1.hour
+          }
+        end
+      end
 end

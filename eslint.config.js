@@ -23,6 +23,7 @@ export default [
       globals: {
         React: 'readonly',
         HTMLFormElement: 'readonly',
+        console: 'readonly',
       },
     },
     plugins: {

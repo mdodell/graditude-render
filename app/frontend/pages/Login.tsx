@@ -1,16 +1,21 @@
 import { Head, useForm, usePage } from '@inertiajs/react';
-import { Button, Grid, PasswordInput, TextInput } from '@mantine/core';
+import { Button, Checkbox, Grid, Group, PasswordInput, TextInput } from '@mantine/core';
 import { AuthLayout } from '../layouts/auth/AuthLayout';
 import { Link } from '../components/ui/link';
 import { login_path, register_path } from '../routes';
 import { useSpinDelay } from 'spin-delay';
 
 export default function Login() {
-  const { email, password } = usePage<{ email: string; password: string }>().props;
+  const { email, password, remember_me } = usePage<{
+    email: string;
+    password: string;
+    remember_me: boolean;
+  }>().props;
 
   const { data, setData, post, processing, errors } = useForm({
     email,
     password,
+    remember_me,
   });
 
   const loading = useSpinDelay(processing, { delay: 100, minDuration: 200 });
@@ -58,9 +63,16 @@ export default function Login() {
           />
         </Grid.Col>
         <Grid.Col span={12}>
-          <Button type="submit" disabled={loading} loading={loading} fullWidth>
-            Login
-          </Button>
+          <Group w="100%" justify="space-between">
+            <Checkbox
+              label="Remember me"
+              name="remember_me"
+              onChange={(e) => setData('remember_me', e.currentTarget.checked)}
+            />
+            <Button type="submit" disabled={loading} loading={loading}>
+              Login
+            </Button>
+          </Group>
         </Grid.Col>
       </AuthLayout>
     </>

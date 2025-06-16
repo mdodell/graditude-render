@@ -14,8 +14,7 @@ class SessionsController < InertiaController
   def create
     if user = User.authenticate_by(email: params[:email], password: params[:password])
       @session = user.sessions.create!
-      cookies.signed.permanent[:session_token] = { value: @session.id, httponly: true }
-
+      set_session_cookie(params[:remember_me])
       redirect_to root_path, notice: "Signed in successfully"
     else
       redirect_to login_path, inertia: {
@@ -35,5 +34,24 @@ class SessionsController < InertiaController
   private
     def set_session
       @session = Current.user.sessions.find(params[:id])
+    end
+
+    def set_session_cookie(remember_me)
+      if remember_me
+        cookies.signed.permanent[:session_token] = {
+          value: @session.id,
+          httponly: true,
+          secure: Rails.env.production?,
+          same_site: :lax
+        }
+      else
+        cookies.signed[:session_token] = {
+          value: @session.id,
+          httponly: true,
+          secure: Rails.env.production?,
+          same_site: :lax,
+          expires: 1.hour
+        }
+      end
     end
 end

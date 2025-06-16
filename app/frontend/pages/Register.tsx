@@ -1,5 +1,5 @@
 import { Head, useForm } from '@inertiajs/react';
-import { Button, Grid, PasswordInput, TextInput } from '@mantine/core';
+import { Button, Checkbox, Grid, PasswordInput, TextInput } from '@mantine/core';
 import { AuthLayout } from '../layouts/auth/AuthLayout';
 import { Link } from '../components/ui/link';
 import { login_path, sign_up_path } from '../routes';
@@ -10,6 +10,7 @@ export default function Register() {
     email: '',
     password: '',
     password_confirmation: '',
+    remember_me: false as boolean,
   });
 
   const loading = useSpinDelay(processing, { delay: 100, minDuration: 200 });
@@ -67,6 +68,13 @@ export default function Register() {
             disabled={loading}
             onChange={(e) => setData('password_confirmation', e.target.value)}
             error={errors.password_confirmation}
+          />
+        </Grid.Col>
+        <Grid.Col span={12}>
+          <Checkbox
+            label="Remember me"
+            name="remember_me"
+            onChange={(e) => setData('remember_me', e.currentTarget.checked)}
           />
         </Grid.Col>
         <Grid.Col span={12}>
