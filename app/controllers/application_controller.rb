@@ -9,12 +9,12 @@ class ApplicationController < ActionController::Base
     def authenticate
       redirect_to login_path unless perform_authentication
     end
-  
+
     def require_no_authentication
       return unless perform_authentication
       redirect_to root_path
     end
-  
+
     def perform_authentication
       Current.session ||= Session.find_by_id(cookies.signed[:session_token])
     end

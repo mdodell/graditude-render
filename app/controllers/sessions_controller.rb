@@ -8,7 +8,7 @@ class SessionsController < InertiaController
   end
 
   def new
-    render inertia: 'Login'
+    render inertia: "Login"
   end
 
   def create
@@ -21,7 +21,7 @@ class SessionsController < InertiaController
         email: params[:email],
         password: params[:password],
         errors: {
-          email: "That email or password is incorrect",
+          email: "That email or password is incorrect"
         }
       }
     end

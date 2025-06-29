@@ -3,7 +3,7 @@ class RegistrationsController < InertiaController
   before_action :require_no_authentication, only: %i[new create]
 
   def new
-    render inertia: 'Register'
+    render inertia: "Register"
   end
 
   def create

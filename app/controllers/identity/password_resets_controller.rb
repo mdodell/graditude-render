@@ -5,16 +5,16 @@ class Identity::PasswordResetsController < InertiaController
   before_action :set_user, only: %i[ edit update ]
 
   def new
-    render inertia: 'RequestForgotPassword'
+    render inertia: "RequestForgotPassword"
   end
 
   def edit
-    render inertia: 'ResetPassword', props: { sid: params[:sid] }
+    render inertia: "ResetPassword", props: { sid: params[:sid] }
   end
 
   def create
     email = params[:email].to_s.strip.downcase
-    
+
     if email.blank?
       return redirect_to reset_password_path, inertia: { errors: { email: "Email can't be blank" } }
     end

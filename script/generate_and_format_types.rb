@@ -11,4 +11,4 @@ if Dir.exist?(types_dir)
   system("npx eslint --fix '#{types_dir}/**/*.{ts,tsx}'")
 else
   puts "No types directory found at #{types_dir}"
-end 
+end

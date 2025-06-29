@@ -26,9 +26,9 @@ gem "bootsnap", require: false
 gem "thruster", require: false
 
 #  Generate types from serializers
-gem 'types_from_serializers'
+gem "types_from_serializers"
 # Serializers
-gem 'oj_serializers'
+gem "oj_serializers"
 
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
