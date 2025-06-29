@@ -23,7 +23,17 @@ export default [
       globals: {
         React: 'readonly',
         HTMLFormElement: 'readonly',
-        console: 'readonly',
+        HTMLInputElement: 'readonly',
+        HTMLTextAreaElement: 'readonly',
+        HTMLSelectElement: 'readonly',
+        HTMLButtonElement: 'readonly',
+        HTMLElement: 'readonly',
+        Event: 'readonly',
+        MouseEvent: 'readonly',
+        KeyboardEvent: 'readonly',
+        ChangeEvent: 'readonly',
+        FormEvent: 'readonly',
+        FocusEvent: 'readonly',
       },
     },
     plugins: {
