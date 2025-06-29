@@ -78,6 +78,9 @@ jobs:
       - name: Install npm dependencies
         run: npm ci
 
+      - name: Generate JavaScript routes
+        run: bin/rails js:routes
+
       - name: Build Vite assets for test environment
         run: bin/vite build --mode=test
 
