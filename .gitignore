@@ -42,12 +42,8 @@ node_modules
 
 
 # Ignore automatically generated js-routes files.
-/app/frontend/routes/index.js
-/app/frontend/routes/index.d.ts
-
-# Ignore automatically generated js-routes files.
-/app/javascript/routes.js
-/app/javascript/routes.d.ts
+# /app/frontend/routes/index.js
+# /app/frontend/routes/index.d.ts
 
 # Ignore byebug history
 .byebug_history
