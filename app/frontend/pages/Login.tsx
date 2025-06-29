@@ -2,7 +2,7 @@ import { Head, useForm, usePage } from '@inertiajs/react';
 import { Button, Checkbox, Grid, Group, PasswordInput, TextInput } from '@mantine/core';
 import { AuthLayout } from '../layouts/auth/AuthLayout';
 import { Link } from '../components/ui/link';
-import { login_path, register_path } from '../routes';
+import { reset_password_path, login_path, register_path } from '../routes';
 import { useSpinDelay } from 'spin-delay';
 
 export default function Login() {
@@ -69,10 +69,13 @@ export default function Login() {
               name="remember_me"
               onChange={(e) => setData('remember_me', e.currentTarget.checked)}
             />
-            <Button type="submit" disabled={loading} loading={loading}>
-              Login
-            </Button>
+            <Link href={reset_password_path()}>Forgot password?</Link>
           </Group>
+        </Grid.Col>
+        <Grid.Col span={12}>
+          <Button type="submit" disabled={loading} loading={loading}>
+            Login
+          </Button>
         </Grid.Col>
       </AuthLayout>
     </>

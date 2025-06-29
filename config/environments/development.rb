@@ -74,5 +74,6 @@ Rails.application.configure do
   # Automatically update js-routes file
   # when routes.rb is changed
   config.middleware.use(JsRoutes::Middleware)
+  config.hosts << /.*\.ngrok-free\.app$/
 
 end

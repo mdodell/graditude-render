@@ -1,19 +1,20 @@
 Rails.application.routes.draw do
   # Authentication routes
   get    'register', to: 'registrations#new'
-  post   'sign_up',  to: 'registrations#create'
+  post   'sign-up',  to: 'registrations#create'
   get    'login',    to: 'sessions#new'
   post   'login',    to: 'sessions#create'
   delete 'logout/:id', to: 'sessions#destroy', as: 'logout'
   # API routes
   # Password management
   resource :password, only: [:edit, :update]
+  get 'reset-password', to: 'identity/password_resets#new'
 
   # Identity management
   namespace :identity do
     resource :email,              only: [:edit, :update]
     resource :email_verification, only: [:show, :create]
-    resource :password_reset,     only: [:new, :edit, :create, :update]
+    resource :password_reset,     only: [:edit, :create, :update]
   end
 
   # Health check
