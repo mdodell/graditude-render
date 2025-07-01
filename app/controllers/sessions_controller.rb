@@ -8,7 +8,7 @@ class SessionsController < InertiaController
   end
 
   def new
-    render inertia: "Login"
+    render inertia: "Auth/Login"
   end
 
   def create

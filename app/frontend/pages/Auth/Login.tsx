@@ -1,8 +1,8 @@
 import { Head, useForm, usePage } from '@inertiajs/react';
 import { Button, Checkbox, Grid, Group, PasswordInput, TextInput } from '@mantine/core';
-import { AuthLayout } from '../layouts/auth/AuthLayout';
-import { Link } from '../components/ui/link';
-import { reset_password_path, login_path, register_path } from '../routes';
+import { AuthLayout } from '../../layouts/auth/AuthLayout';
+import { Link } from '../../components/ui/link';
+import { reset_password_path, login_path, register_path } from '../../routes';
 import { useSpinDelay } from 'spin-delay';
 
 export default function Login() {

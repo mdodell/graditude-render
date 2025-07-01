@@ -1,7 +1,7 @@
 import { Button, Center, Grid, Group, TextInput, Text, rem } from '@mantine/core';
-import { AuthLayout } from '../layouts/auth/AuthLayout';
-import { Link } from '../components/ui/link';
-import { identity_password_reset_path, login_path } from '../routes';
+import { AuthLayout } from '../../layouts/auth/AuthLayout';
+import { Link } from '../../components/ui/link';
+import { identity_password_reset_path, login_path } from '../../routes';
 import { IconArrowLeft } from '@tabler/icons-react';
 import { useForm } from '@inertiajs/react';
 import { useSpinDelay } from 'spin-delay';

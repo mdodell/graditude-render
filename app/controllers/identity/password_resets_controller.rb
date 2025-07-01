@@ -5,11 +5,11 @@ class Identity::PasswordResetsController < InertiaController
   before_action :set_user, only: %i[ edit update ]
 
   def new
-    render inertia: "RequestForgotPassword"
+    render inertia: "Auth/RequestForgotPassword"
   end
 
   def edit
-    render inertia: "ResetPassword", props: { sid: params[:sid] }
+    render inertia: "Auth/ResetPassword", props: { sid: params[:sid] }
   end
 
   def create

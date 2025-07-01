@@ -1,8 +1,14 @@
-import { router, usePage } from '@inertiajs/react';
-import { Button } from '@mantine/core';
-import { logout_path } from '../routes';
+import { DashboardLayout } from '../layouts/app/DashboardLayout';
+import { AppPage } from '../types/inertia';
+import AppHead from '../components/meta/AppHead';
 
-export default function Home() {
-  const { auth } = usePage<{ auth: { session: { id: string } } }>().props;
-  return <Button onClick={() => router.delete(logout_path({ id: auth.session.id }))}>Home</Button>;
-}
+const Home: AppPage = () => {
+  return (
+    <DashboardLayout>
+      <AppHead title="Home" />
+      TODO: Add home page content
+    </DashboardLayout>
+  );
+};
+
+export default Home;

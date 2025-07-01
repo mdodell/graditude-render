@@ -1,8 +1,8 @@
 import { Head, useForm } from '@inertiajs/react';
 import { Button, Checkbox, Grid, PasswordInput, TextInput } from '@mantine/core';
-import { AuthLayout } from '../layouts/auth/AuthLayout';
-import { Link } from '../components/ui/link';
-import { login_path, sign_up_path } from '../routes';
+import { AuthLayout } from '../../layouts/auth/AuthLayout';
+import { Link } from '../../components/ui/link';
+import { login_path, sign_up_path } from '../../routes';
 import { useSpinDelay } from 'spin-delay';
 
 export default function Register() {

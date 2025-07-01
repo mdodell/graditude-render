@@ -1,8 +1,8 @@
 import { Button, Grid, PasswordInput } from '@mantine/core';
 import { useForm, usePage } from '@inertiajs/react';
 
-import { AuthLayout } from '../layouts/auth/AuthLayout';
-import { identity_password_reset_path } from '../routes';
+import { AuthLayout } from '../../layouts/auth/AuthLayout';
+import { identity_password_reset_path } from '../../routes';
 
 export default function ResetPassword() {
   const { sid } = usePage<{ props: { sid: string } }>().props;
