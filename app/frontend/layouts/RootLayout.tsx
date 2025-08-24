@@ -41,9 +41,7 @@ const theme = createTheme({
         header: {
           height: 70,
         },
-        navbar: {
-          width: 300,
-        },
+
         padding: 'md',
       },
     },

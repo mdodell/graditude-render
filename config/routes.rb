@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :organizations
   # Authentication routes
   get    "register", to: "registrations#new"
   post   "sign-up",  to: "registrations#create"

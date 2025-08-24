@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_01_192648) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_24_175401) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "organizations", force: :cascade do |t|
+    t.string "name"
+    t.string "domain"
+    t.string "description", limit: 250
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index [ "domain" ], name: "index_organizations_on_domain", unique: true
+  end
 
   create_table "sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -20,7 +29,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_01_192648) do
     t.string "ip_address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_sessions_on_user_id"
+    t.index [ "user_id" ], name: "index_sessions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -29,7 +38,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_01_192648) do
     t.boolean "verified", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index [ "email" ], name: "index_users_on_email", unique: true
   end
 
   add_foreign_key "sessions", "users"
