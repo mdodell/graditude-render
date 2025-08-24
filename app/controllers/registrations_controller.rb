@@ -20,6 +20,11 @@ class RegistrationsController < InertiaController
     end
   end
 
+  def destroy
+    @user.destroy
+    redirect_to root_path, notice: "Your account has been deleted"
+  end
+
   private
     def user_params
       params.permit(:email, :password, :password_confirmation)

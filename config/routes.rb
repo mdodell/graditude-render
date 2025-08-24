@@ -17,6 +17,8 @@ Rails.application.routes.draw do
     resource :password_reset,     only: [ :edit, :create, :update ]
   end
 
+  get "settings/account", to: "user_settings#show"
+
   # Health check
   get "up" => "rails/health#show", as: :rails_health_check
 

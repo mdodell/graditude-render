@@ -6,6 +6,8 @@ import { PropsWithChildren } from 'react';
 import classes from './DashboardLayout.module.css';
 import { UserMenu } from '../../components/ui/UserMenu';
 import { AppLogo } from '../../components/ui/AppLogo/AppLogo';
+import { Header } from '../../components/ui/Header';
+import { SideNavItem } from '../../components/ui/SideNav/SideNavItem';
 
 const navbarLinks = [
   {
@@ -18,54 +20,29 @@ const navbarLinks = [
   },
 ];
 
-export function DashboardLayout({ children, ...props }: PropsWithChildren) {
+export function DashboardLayout({ children }: PropsWithChildren) {
   const { url } = usePage();
   return (
-    <AppShell
-      header={{ height: 70 }}
-      navbar={{
-        width: 300,
-        breakpoint: 'sm',
-        collapsed: { mobile: true },
-      }}
-      padding="md"
-    >
-      <AppShell.Header px="md">
-        <Group h="100%" align="center" justify="space-between">
-          <Box w={125} pt="sm">
-            <AppLogo />
-          </Box>
-          <Group>
-            <ActionIcon variant="transparent" color="gray">
-              <IconBell stroke={1.5} size={18} />
-            </ActionIcon>
-            <Divider orientation="vertical" />
-            <UserMenu />
-          </Group>
-        </Group>
-      </AppShell.Header>
-
-      <AppShell.Navbar p="md">
+    <AppShell>
+      <Header />
+      <AppShell.Navbar>
         <AppShell.Section className={classes.section}>Organization</AppShell.Section>
         <AppShell.Section>
           {navbarLinks.map((section) => (
             <>
-              <Text c="dimmed" mt="sm" tt="uppercase" fw={600} style={{ letterSpacing: '1.25px' }}>
+              <Text
+                key={section.label}
+                c="dimmed"
+                mt="sm"
+                tt="uppercase"
+                fw={600}
+                style={{ letterSpacing: '1.25px' }}
+              >
                 {section.label}
               </Text>
               {section.links.map((link) => {
                 const isActive = url === link.href;
-                return (
-                  <NavLink
-                    active={url === link.href}
-                    key={link.label}
-                    leftSection={link.icon}
-                    label={link.label}
-                    href={link.href}
-                    variant="light"
-                    fw={isActive ? 'bold' : 400}
-                  />
-                );
+                return <SideNavItem key={link.label} {...link} active={isActive} />;
               })}
             </>
           ))}

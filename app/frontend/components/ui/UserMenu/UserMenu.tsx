@@ -1,10 +1,10 @@
 import { router } from '@inertiajs/react';
 
-import { Avatar, Menu, useMantineColorScheme } from '@mantine/core';
-import { IconSettings, IconLogout, IconMoon, IconSun } from '@tabler/icons-react';
+import { Avatar, Button, Menu, useMantineColorScheme } from '@mantine/core';
+import { IconSettings, IconLogout, IconMoon, IconSun, IconTrash } from '@tabler/icons-react';
 import { usePage } from '@inertiajs/react';
 import { PageProps } from '../../../types/inertia';
-import { logout_path } from '../../../routes';
+import { logout_path, settings_account_path } from '../../../routes';
 import classes from './UserMenu.module.css';
 
 export function UserMenu() {
@@ -41,7 +41,10 @@ export function UserMenu() {
         >
           {colorScheme === 'dark' ? 'Light Mode' : 'Dark Mode'}
         </Menu.Item>
-        <Menu.Item leftSection={<IconSettings size={16} stroke={1.5} />}>
+        <Menu.Item
+          leftSection={<IconSettings size={16} stroke={1.5} />}
+          onClick={() => router.visit(settings_account_path())}
+        >
           Account settings
         </Menu.Item>
         <Menu.Item
@@ -50,6 +53,7 @@ export function UserMenu() {
         >
           Logout
         </Menu.Item>
+        <Menu.Divider />
       </Menu.Dropdown>
     </Menu>
   );
