@@ -2,10 +2,10 @@
 
 one:
   name: MyString
-  domain: MyString
+  domain: example1.com
   description: MyString
 
 two:
   name: MyString
-  domain: MyString
+  domain: example2.com
   description: MyString

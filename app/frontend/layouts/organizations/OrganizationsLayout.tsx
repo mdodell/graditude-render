@@ -1,7 +1,7 @@
-import { AppShell, Button, Flex, Title } from '@mantine/core';
+import { AppShell, AppShellMain, Button, Flex, Title, Text, Group } from '@mantine/core';
 import { PropsWithChildren } from 'react';
 import { Header } from '../../components/ui/Header';
-import { IconPlus } from '@tabler/icons-react';
+import { IconPlus, IconUsers } from '@tabler/icons-react';
 import { router } from '@inertiajs/react';
 import { new_organization_path } from '../../routes';
 
@@ -13,15 +13,28 @@ export function OrganizationsLayout({ children }: PropsWithChildren) {
   return (
     <AppShell navbar={{ width: 0, breakpoint: 'lg' }}>
       <Header />
-      <AppShell.Main>
+      <AppShellMain>
         <Flex justify="space-between" align="center">
-          <Title>Organizations</Title>
-          <Button rightSection={<IconPlus />} onClick={handleCreateOrganization}>
-            Create Organization
-          </Button>
+          <Flex direction="column">
+            <Title order={3}>Organizations</Title>
+            <Text c="dimmed">Manage and discover college organizations</Text>
+          </Flex>
+
+          <Group>
+            <Button
+              leftSection={<IconUsers size={14} />}
+              variant="outline"
+              onClick={handleCreateOrganization}
+            >
+              Join Organization
+            </Button>
+            <Button leftSection={<IconPlus size={14} />} onClick={handleCreateOrganization}>
+              Create Organization
+            </Button>
+          </Group>
         </Flex>
         {children}
-      </AppShell.Main>
+      </AppShellMain>
     </AppShell>
   );
 }

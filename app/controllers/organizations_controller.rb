@@ -11,56 +11,54 @@ class OrganizationsController < InertiaController
 
   # GET /organizations/1 or /organizations/1.json
   def show
+    render inertia: "Organization/Show", props: {
+      organization: @organization
+    }
   end
 
   # GET /organizations/new
   def new
     @organization = Organization.new
-    render inertia: "Organization/New", props: {
-      organization: @organization
-    }
+    render inertia: "Organization/New"
   end
 
   # GET /organizations/1/edit
   def edit
+    render inertia: "Organization/Edit", props: {
+      organization: @organization
+    }
   end
 
   # POST /organizations or /organizations.json
   def create
     @organization = Organization.new(organization_params)
 
-    respond_to do |format|
-      if @organization.save
-        format.html { redirect_to @organization, notice: "Organization was successfully created." }
-        format.json { render :show, status: :created, location: @organization }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @organization.errors, status: :unprocessable_entity }
-      end
+    if @organization.save
+      redirect_to @organization, notice: "Organization was successfully created."
+    else
+      render inertia: "Organization/New", props: {
+        organization: @organization,
+        errors: @organization.errors
+      }, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /organizations/1 or /organizations/1.json
   def update
-    respond_to do |format|
-      if @organization.update(organization_params)
-        format.html { redirect_to @organization, notice: "Organization was successfully updated." }
-        format.json { render :show, status: :ok, location: @organization }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @organization.errors, status: :unprocessable_entity }
-      end
+    if @organization.update(organization_params)
+      redirect_to @organization, notice: "Organization was successfully updated."
+    else
+      render inertia: "Organization/Edit", props: {
+        organization: @organization,
+        errors: @organization.errors
+      }, status: :unprocessable_entity
     end
   end
 
   # DELETE /organizations/1 or /organizations/1.json
   def destroy
     @organization.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to organizations_path, status: :see_other, notice: "Organization was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to organizations_path, status: :see_other, notice: "Organization was successfully destroyed."
   end
 
   private
@@ -71,6 +69,6 @@ class OrganizationsController < InertiaController
 
     # Only allow a list of trusted parameters through.
     def organization_params
-      params.expect(organization: [ :name, :domain, :description ])
+      params.require(:organization).permit(:name, :domain, :description)
     end
 end

@@ -65,3 +65,6 @@ gem "solid_cache", "~> 1.0"
 gem "authentication-zero", "~> 4.0"
 
 gem "js-routes", "~> 2.3"
+
+# CSV parsing for seeding
+gem "csv"

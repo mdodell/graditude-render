@@ -76,10 +76,22 @@ unverified_users.each do |email|
   puts "✅ Unverified user created: #{user.email}"
 end
 
+# Seed colleges from CSV if file exists
+colleges_csv_path = Rails.root.join('db', 'seeds', 'csv', 'colleges.csv')
+if File.exist?(colleges_csv_path)
+  puts "\n🏫 Seeding colleges from CSV..."
+  Rake::Task['db:seed:colleges'].invoke
+else
+  puts "\n⚠️  No colleges CSV found at #{colleges_csv_path}"
+  puts "   To seed colleges, place a 'colleges.csv' file in db/seeds/csv/"
+  puts "   Then run: bin/rails db:seed:colleges"
+end
+
 puts "\n🎉 Seeding completed!"
 puts "Total users created: #{User.count}"
 puts "Verified users: #{User.where(verified: true).count}"
 puts "Unverified users: #{User.where(verified: false).count}"
+puts "Total colleges: #{College.count}" if defined?(College)
 
 # Display login credentials for easy access
 puts "\n🔑 Login Credentials for Testing:"

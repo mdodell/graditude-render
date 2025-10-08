@@ -3,6 +3,8 @@ require "test_helper"
 class OrganizationsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @organization = organizations(:one)
+    @user = users(:lazaro_nixon)
+    sign_in_as(@user)
   end
 
   test "should get index" do
@@ -17,7 +19,7 @@ class OrganizationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create organization" do
     assert_difference("Organization.count") do
-      post organizations_url, params: { organization: { description: @organization.description, domain: @organization.domain, name: @organization.name } }
+      post organizations_url, params: { organization: { description: "New Description", domain: "newdomain.com", name: "New Organization" } }
     end
 
     assert_redirected_to organization_url(Organization.last)

@@ -41,8 +41,12 @@ const theme = createTheme({
         header: {
           height: 70,
         },
-
         padding: 'md',
+      },
+    },
+    AppShellMain: {
+      defaultProps: {
+        bg: 'var(--mantine-color-gray-0)',
       },
     },
     AppShellNavbar: {
