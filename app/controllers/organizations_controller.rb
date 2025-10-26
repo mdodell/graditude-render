@@ -64,7 +64,7 @@ class OrganizationsController < InertiaController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_organization
-      @organization = Organization.find(params.expect(:id))
+      @organization = Organization.find_by(domain: params.expect(:id))
     end
 
     # Only allow a list of trusted parameters through.

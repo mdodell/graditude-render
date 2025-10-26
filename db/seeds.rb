@@ -77,7 +77,7 @@ unverified_users.each do |email|
 end
 
 # Seed colleges from CSV if file exists
-colleges_csv_path = Rails.root.join('db', 'seeds', 'csv', 'colleges.csv')
+colleges_csv_path = Rails.root.join('db', 'seeds', 'csv', 'us_universities.csv')
 if File.exist?(colleges_csv_path)
   puts "\n🏫 Seeding colleges from CSV..."
   Rake::Task['db:seed:colleges'].invoke

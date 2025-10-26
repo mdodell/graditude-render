@@ -1,61 +1,20 @@
-import { AppPage } from '../../types/inertia';
-import { useForm, router } from '@inertiajs/react';
-import {
-  TextInput,
-  Textarea,
-  Button,
-  Paper,
-  Title,
-  Stack,
-  Group,
-  Box,
-  Flex,
-  Text,
-  Stepper,
-} from '@mantine/core';
-import { notifications } from '@mantine/notifications';
-import { Organization } from '../../types/serializers';
-import { PropsWithChildren, useState } from 'react';
+import { router } from '@inertiajs/react';
+import { Button, Paper, Title, Stack, Box, Flex, Text, Stepper } from '@mantine/core';
+import { PropsWithChildren } from 'react';
 import { IconArrowLeft } from '@tabler/icons-react';
 
-type OrganizationFormData = Pick<Organization, 'name' | 'domain' | 'description'>;
+const STEPS = ['details', 'college', 'description', 'review'] as const;
 
-const STEPS = ['Details', 'College', 'Description', 'Review'] as const;
+interface OrganizationsCreationLayoutProps extends PropsWithChildren {
+  step?: string;
+}
 
-export const OrganizationsCreationLayout = ({ children }: PropsWithChildren) => {
-  const [active, setActive] = useState<(typeof STEPS)[number]>(STEPS[0]);
-  const nextStep = () =>
-    setActive((active) =>
-      STEPS.indexOf(active) < STEPS.length - 1 ? STEPS[STEPS.indexOf(active) + 1] : active,
-    );
-  const prevStep = () =>
-    setActive((active) => (STEPS.indexOf(active) > 0 ? STEPS[STEPS.indexOf(active) - 1] : active));
-
-  const { data, setData, post, processing, errors, reset } = useForm<OrganizationFormData>({
-    name: '',
-    domain: '',
-    description: '',
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    post('/organizations', {
-      onSuccess: () => {
-        notifications.show({
-          title: 'Success!',
-          message: 'Organization created successfully',
-          color: 'green',
-        });
-        reset();
-      },
-      onError: () => {
-        notifications.show({
-          title: 'Error',
-          message: 'Failed to create organization. Please check the form.',
-          color: 'red',
-        });
-      },
-    });
+export const OrganizationsCreationLayout = ({
+  children,
+  step = 'details',
+}: OrganizationsCreationLayoutProps) => {
+  const getStepIndex = (stepName: string) => {
+    return STEPS.indexOf(stepName as (typeof STEPS)[number]);
   };
 
   return (
@@ -84,29 +43,13 @@ export const OrganizationsCreationLayout = ({ children }: PropsWithChildren) => 
         }}
         maw="90%"
       >
-        <form onSubmit={handleSubmit} noValidate={true}>
-          <Stepper active={STEPS.indexOf(active)} size="md" mb="md">
-            <Stepper.Step label="Details" />
-            <Stepper.Step label="College" />
-            <Stepper.Step label="Description" />
-            <Stepper.Step label="Review" />
-          </Stepper>
-          <Stack gap="md">
-            {children}
-            <Group justify={active !== STEPS[0] ? 'space-between' : 'flex-end'} mt="md">
-              {active !== STEPS[0] && (
-                <Button variant="light" onClick={prevStep}>
-                  Previous
-                </Button>
-              )}
-              {active !== STEPS[STEPS.length - 1] && (
-                <Button type="submit" loading={processing}>
-                  {active === STEPS[STEPS.length - 1] ? 'Create Organization' : 'Next'}
-                </Button>
-              )}
-            </Group>
-          </Stack>
-        </form>
+        <Stepper active={getStepIndex(step)} size="md" mb="md">
+          <Stepper.Step label="Details" />
+          <Stepper.Step label="College" />
+          <Stepper.Step label="Description" />
+          <Stepper.Step label="Review" />
+        </Stepper>
+        <Stack gap="md">{children}</Stack>
       </Paper>
     </Flex>
   );

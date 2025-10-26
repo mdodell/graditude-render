@@ -68,3 +68,9 @@ gem "js-routes", "~> 2.3"
 
 # CSV parsing for seeding
 gem "csv"
+
+# Multi-step wizard forms
+gem "wicked"
+
+# Pagination
+gem "pagy"

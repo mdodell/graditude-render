@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
-  resources :organizations
+  resources :organizations do
+    collection do
+      get "new", to: "organization_wizards#new"
+      get "new/:id", to: "organization_wizards#show"
+      patch "new/:id", to: "organization_wizards#update"
+      put "new/:id", to: "organization_wizards#update"
+    end
+  end
   # Authentication routes
   get    "register", to: "registrations#new"
   post   "sign-up",  to: "registrations#create"

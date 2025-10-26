@@ -2,7 +2,7 @@ namespace :db do
   namespace :seed do
     desc "Import colleges from CSV file"
     task :colleges, [ :filename ] => :environment do |_task, args|
-      filename = args[:filename] || "colleges.csv"
+      filename = args[:filename] || "us_universities.csv"
       csv_path = Rails.root.join("db", "seeds", "csv", filename)
 
       unless File.exist?(csv_path)
