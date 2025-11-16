@@ -7,7 +7,7 @@ export type PageProps = {
   //     // Add other shared props if needed
   //   };
   auth: {
-    session: {
+    session?: {
       id: string;
     };
   };

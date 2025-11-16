@@ -1,24 +1,18 @@
 import { router } from '@inertiajs/react';
 
-import { Avatar, Button, Menu, useMantineColorScheme } from '@mantine/core';
-import { IconSettings, IconLogout, IconMoon, IconSun, IconTrash } from '@tabler/icons-react';
-import { usePage } from '@inertiajs/react';
-import { PageProps } from '../../../types/inertia';
+import { Avatar, Menu, useMantineColorScheme } from '@mantine/core';
+import { IconSettings, IconLogout, IconMoon, IconSun } from '@tabler/icons-react';
 import { logout_path, settings_account_path } from '../../../routes';
 import classes from './UserMenu.module.css';
 
-export function UserMenu() {
+interface UserMenuProps {
+  id: string;
+}
+
+export function UserMenu({ id }: UserMenuProps) {
   const { colorScheme, setColorScheme } = useMantineColorScheme({
     keepTransitions: true,
   });
-
-  const {
-    props: {
-      auth: {
-        session: { id },
-      },
-    },
-  } = usePage<PageProps>();
 
   return (
     <Menu closeOnItemClick={false}>

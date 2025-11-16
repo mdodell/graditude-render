@@ -28,4 +28,24 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  hello: 'Hello world'
+
+  pundit:
+    default: 'You are not authorized to perform this action.'
+    invitation_policy:
+      accept?:
+        _: 'You are not authorized to accept this invitation.'
+        wrong_email: 'This invitation was not sent to you.'
+        expired: 'This invitation has expired.'
+        already_accepted: 'This invitation has already been accepted.'
+        already_member: 'You are already a member of this organization.'
+      create?: 'You are not authorized to create invitations.'
+      update?: 'You are not authorized to update this invitation.'
+      destroy?: 'You are not authorized to delete this invitation.'
+      show?: 'You are not authorized to view this invitation.'
+    organization_policy:
+      create?: 'You are not authorized to create organizations.'
+      update?: 'You are not authorized to update this organization.'
+      destroy?: 'You are not authorized to delete this organization.'
+      invite_users?: 'You are not authorized to invite users to this organization.'
+      manage_members?: 'You are not authorized to manage members of this organization.'

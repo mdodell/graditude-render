@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+owner_role:
+  name: owner
+  resource: one (Organization)
+
+admin_role:
+  name: admin
+  resource: two (Organization)

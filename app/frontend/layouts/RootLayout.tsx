@@ -2,10 +2,10 @@ import '@mantine/core/styles.layer.css';
 import '@mantine/notifications/styles.layer.css';
 
 import {
-  AppShellHeader,
   createTheme,
   defaultVariantColorsResolver,
   MantineProvider,
+  Modal,
   VariantColorsResolver,
 } from '@mantine/core';
 import { PropsWithChildren } from 'react';
@@ -54,6 +54,13 @@ const theme = createTheme({
         p: 'md',
       },
     },
+    Modal: Modal.extend({
+      styles: {
+        title: {
+          fontWeight: 'var(--mantine-h2-font-weight)',
+        },
+      },
+    }),
   },
 });
 

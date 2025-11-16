@@ -11,30 +11,28 @@ export function OrganizationsLayout({ children }: PropsWithChildren) {
   };
 
   return (
-    <AppShell navbar={{ width: 0, breakpoint: 'lg' }}>
-      <Header />
-      <AppShellMain>
-        <Flex justify="space-between" align="center">
-          <Flex direction="column">
-            <Title order={3}>Organizations</Title>
-            <Text c="dimmed">Manage and discover college organizations</Text>
-          </Flex>
+    <>
+      <AppShell navbar={{ width: 0, breakpoint: 'lg' }}>
+        <Header />
+        <AppShellMain>
+          <Flex justify="space-between" align="center">
+            <Flex direction="column">
+              <Title order={3}>Organizations</Title>
+              <Text c="dimmed">Manage and discover college organizations</Text>
+            </Flex>
 
-          <Group>
-            <Button
-              leftSection={<IconUsers size={14} />}
-              variant="outline"
-              onClick={handleCreateOrganization}
-            >
-              Join Organization
-            </Button>
-            <Button leftSection={<IconPlus size={14} />} onClick={handleCreateOrganization}>
-              Create Organization
-            </Button>
-          </Group>
-        </Flex>
-        {children}
-      </AppShellMain>
-    </AppShell>
+            <Group>
+              <Button leftSection={<IconUsers size={14} />} variant="outline">
+                Join Organization
+              </Button>
+              <Button leftSection={<IconPlus size={14} />} onClick={handleCreateOrganization}>
+                Create Organization
+              </Button>
+            </Group>
+          </Flex>
+          {children}
+        </AppShellMain>
+      </AppShell>
+    </>
   );
 }

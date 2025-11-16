@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :organizations do
+    resources :invitations, only: [ :create, :destroy ]
     collection do
       get "new", to: "organization_wizards#new"
       get "new/:id", to: "organization_wizards#show"
@@ -7,6 +8,10 @@ Rails.application.routes.draw do
       put "new/:id", to: "organization_wizards#update"
     end
   end
+
+  # Invitation acceptance (polymorphic - works for any invitable type)
+  resources :invitation_acceptance, param: :invite_code, only: [ :update ]
+
   # Authentication routes
   get    "register", to: "registrations#new"
   post   "sign-up",  to: "registrations#create"
