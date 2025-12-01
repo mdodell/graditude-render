@@ -13,9 +13,7 @@ class OrganizationsController < InertiaController
   # GET /organizations/1 or /organizations/1.json
   def show
     render inertia: "Organization/Show", props: {
-      organization: OrganizationSerializer.one(@organization),
-      invitations: InvitationSerializer.many(@organization.pending_invitations),
-      user_role: Current.user&.role_in(@organization)
+      organization: OrganizationSerializer.one(@organization)
     }
   end
 

@@ -30,9 +30,6 @@ gem "types_from_serializers"
 # Serializers
 gem "oj_serializers"
 
-# Role-based authorization
-gem "rolify"
-
 # Authorization
 gem "pundit"
 

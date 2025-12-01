@@ -4,7 +4,6 @@ class OrganizationsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @organization = organizations(:one)
     @user = users(:lazaro_nixon)
-    @user.add_role(:owner, @organization)
     sign_in_as(@user)
   end
 

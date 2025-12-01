@@ -12,46 +12,23 @@ class OrganizationPolicy < ApplicationPolicy
   end
 
   def update?
-    owner_or_admin? # Only owners and admins can update organizations
+    user.present? # Only authenticated users can update organizations
   end
 
   def destroy?
-    owner? # Only owners can delete organizations
+    user.present? # Only authenticated users can delete organizations
   end
 
   def invite_users?
-    owner_or_admin? # Only owners and admins can invite users
+    user.present? # Only authenticated users can invite users
   end
 
   def manage_members?
-    owner_or_admin? # Only owners and admins can manage members
+    user.present? # Only authenticated users can manage members
   end
 
   def view_members?
-    owner_admin_or_member? # Members can view other members
-  end
-
-  private
-
-  # Organization-specific role helper methods
-  def owner?
-    user&.has_role?(:owner, record)
-  end
-
-  def admin?
-    user&.has_role?(:admin, record)
-  end
-
-  def member?
-    user&.has_role?(:member, record)
-  end
-
-  def owner_or_admin?
-    owner? || admin?
-  end
-
-  def owner_admin_or_member?
-    owner? || admin? || member?
+    user.present? # Only authenticated users can view members
   end
 
   class Scope < ApplicationPolicy::Scope
