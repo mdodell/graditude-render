@@ -9,6 +9,7 @@ class Organization < ApplicationRecord
   VALID_ROLES = %w[member admin owner].freeze
 
   has_and_belongs_to_many :colleges, join_table: :organization_colleges, dependent: :delete_all
+  has_many :programs, dependent: :destroy
 
   # Step validations for wicked wizard
   validates :name, presence: true, length: { minimum: 2, maximum: 100 }, on: :details
@@ -27,6 +28,18 @@ class Organization < ApplicationRecord
     :member
   end
 
+  def owners
+    users.with_role(:owner, self)
+  end
+
+  def admins
+    users.with_role(:admin, self)
+  end
+
+  def members
+    users.with_role(:member, self)
+  end
+
   private
 
   def must_have_college
@@ -34,14 +47,11 @@ class Organization < ApplicationRecord
   end
 
   after_create :set_owner
-  after_create :add_owner_role
 
   def set_owner
-    membership = memberships.create!(user: created_by_user, memberable: self)
-    created_by_user.add_role(:owner, self)
-  end
-
-  def owners
-    users.with_role(:owner, self)
+    if created_by_user
+      memberships.create!(user: created_by_user, memberable: self)
+      created_by_user.add_role(:owner, self)
+    end
   end
 end

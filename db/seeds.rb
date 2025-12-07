@@ -203,7 +203,152 @@ organizations_data.each do |org_data|
   puts "✅ Organization created: #{org.name} (#{org.domain})"
 end
 
+puts "\n📚 Seeding programs..."
 
+# Create programs for each organization
+programs_data = [
+  # Programs for Computer Science Society
+  {
+    organization: organizations[0],
+    name: "Web Development Bootcamp",
+    description: "A 12-week intensive program teaching modern web development with React, Node.js, and databases.",
+    created_by_user: owner_user
+  },
+  {
+    organization: organizations[0],
+    name: "Machine Learning Workshop Series",
+    description: "Weekly workshops covering fundamentals of machine learning and AI applications.",
+    created_by_user: admin_user
+  },
+  {
+    organization: organizations[0],
+    name: "Competitive Programming Team",
+    description: "Training program for students interested in competitive programming and coding competitions.",
+    created_by_user: developer_user
+  },
+  # Programs for Engineering Innovation Hub
+  {
+    organization: organizations[1],
+    name: "Robotics Lab Access Program",
+    description: "Hands-on robotics development program with access to lab equipment and mentorship.",
+    created_by_user: owner_user
+  },
+  {
+    organization: organizations[1],
+    name: "Sustainable Engineering Initiative",
+    description: "Program focused on developing sustainable engineering solutions for environmental challenges.",
+    created_by_user: admin_user
+  },
+  # Programs for Business Analytics Club
+  {
+    organization: organizations[2],
+    name: "Data Analytics Certificate",
+    description: "Professional certificate program in business data analytics and visualization.",
+    created_by_user: owner_user
+  },
+  {
+    organization: organizations[2],
+    name: "Industry Case Study Workshop",
+    description: "Monthly workshops analyzing real-world business cases using data analytics.",
+    created_by_user: admin_user
+  },
+  # Programs for Research Collaboration Network
+  {
+    organization: organizations[3],
+    name: "Interdisciplinary Research Grant",
+    description: "Funding program supporting collaborative research across multiple departments.",
+    created_by_user: owner_user
+  },
+  {
+    organization: organizations[3],
+    name: "Graduate Research Symposium",
+    description: "Annual symposium program for graduate students to present their research findings.",
+    created_by_user: developer_user
+  },
+  # Programs for Alumni Mentorship Program
+  {
+    organization: organizations[4],
+    name: "Career Mentorship Track",
+    description: "One-on-one mentorship program pairing students with alumni in their field of interest.",
+    created_by_user: owner_user
+  },
+  {
+    organization: organizations[4],
+    name: "Entrepreneurship Mentorship",
+    description: "Specialized mentorship program for students interested in starting their own businesses.",
+    created_by_user: admin_user
+  }
+]
+
+programs = []
+programs_data.each do |program_data|
+  program = Program.find_or_create_by!(
+    name: program_data[:name],
+    organization: program_data[:organization]
+  ) do |p|
+    p.description = program_data[:description]
+    p.created_by_user = program_data[:created_by_user]
+  end
+
+  programs << program
+  puts "✅ Program created: #{program.name} in #{program.organization.name}"
+end
+
+# Add some additional members to organizations
+puts "\n👥 Adding additional organization members..."
+
+# Get some sample users to add to organizations
+sample_users = [
+  admin_user,
+  developer_user,
+  test_user,
+  User.find_by(email: 'john.doe@example.com'),
+  User.find_by(email: 'jane.smith@example.com'),
+  User.find_by(email: 'sarah.jones@example.com')
+].compact
+
+# Add 2-4 random users to each organization as members
+organizations.each do |org|
+  # Skip the owner (already added during org creation)
+  available_users = sample_users.reject { |u| u.has_any_role?(resource: org) }
+
+  # Add 2-4 random users to this organization
+  users_to_add = available_users.sample(rand(2..4))
+
+  users_to_add.each do |user|
+    org.memberships.find_or_create_by!(user: user)
+    user.add_role(:member, org)
+    puts "✅ Added #{user.email} as member to #{org.name}"
+  end
+end
+
+# Now add program members from organization members
+puts "\n👥 Adding program members..."
+
+organizations.each do |org|
+  # Get all users who are members of this organization
+  org_members = org.users.to_a
+
+  # For each program in this organization
+  org.programs.each do |program|
+    # Skip the program owner (already added during program creation)
+    available_members = org_members.reject { |u| u.has_any_role?(resource: program) }
+
+    next if available_members.empty?
+
+    # Add 1-3 random organization members to each program
+    members_to_add = available_members.sample(rand(1..3))
+
+    members_to_add.each do |member|
+      # Randomly assign as member or admin (80% member, 20% admin)
+      role = rand < 0.8 ? :member : :admin
+
+      program.memberships.find_or_create_by!(user: member)
+      member.add_role(role, program)
+      puts "✅ Added #{member.email} as #{role} to #{program.name}"
+    end
+  end
+end
 
 puts "\n🎉 Seeding completed!"
 puts "Total users created: #{User.count}"
@@ -211,6 +356,7 @@ puts "Verified users: #{User.where(verified: true).count}"
 puts "Unverified users: #{User.where(verified: false).count}"
 puts "Total colleges: #{College.count}" if defined?(College)
 puts "Total organizations: #{Organization.count}"
+puts "Total programs: #{Program.count}"
 
 # Display login credentials for easy access
 puts "\n🔑 Login Credentials for Testing:"

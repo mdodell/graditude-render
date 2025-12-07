@@ -8,6 +8,10 @@ Rails.application.routes.draw do
     end
 
     resources :invitations, only: [ :create ]
+
+    resources :programs do
+      resources :invitations, only: [ :create ]
+    end
   end
 
   # 1. GET route: Handles the initial click from the email.

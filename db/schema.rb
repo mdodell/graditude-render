@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_01_073359) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_07_221723) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -30,6 +30,14 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_01_073359) do
     t.datetime "updated_at", null: false
     t.index [ "invitable_type", "invitable_id" ], name: "index_invitations_on_invitable"
     t.index [ "token" ], name: "index_invitations_on_token"
+  end
+
+  create_table "membership_profiles", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "membership_id", null: false
+    t.string "type"
+    t.datetime "updated_at", null: false
+    t.index [ "membership_id" ], name: "index_membership_profiles_on_membership_id"
   end
 
   create_table "memberships", force: :cascade do |t|
@@ -58,6 +66,15 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_01_073359) do
     t.string "name"
     t.datetime "updated_at", null: false
     t.index [ "domain" ], name: "index_organizations_on_domain", unique: true
+  end
+
+  create_table "programs", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "name"
+    t.bigint "organization_id", null: false
+    t.datetime "updated_at", null: false
+    t.index [ "organization_id" ], name: "index_programs_on_organization_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -96,8 +113,10 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_01_073359) do
     t.index [ "user_id" ], name: "index_users_roles_on_user_id"
   end
 
+  add_foreign_key "membership_profiles", "memberships"
   add_foreign_key "memberships", "users"
   add_foreign_key "organization_colleges", "colleges"
   add_foreign_key "organization_colleges", "organizations"
+  add_foreign_key "programs", "organizations"
   add_foreign_key "sessions", "users"
 end

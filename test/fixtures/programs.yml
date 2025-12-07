@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: Software Development
+  organization: one
+  description: A program for software development training
+
+two:
+  name: Data Science
+  organization: one
+  description: A program for data science education
+
+three:
+  name: Marketing Bootcamp
+  organization: two
+  description: A program for marketing professionals
+
