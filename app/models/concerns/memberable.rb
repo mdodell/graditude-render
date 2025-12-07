@@ -13,6 +13,15 @@ module Memberable
     # 3. User Association (Convenience Method)
     # This provides a clean way to access the users who are members of this entity.
     has_many :users, through: :memberships
+
+    # Add a member with a specific role - creates membership and assigns role
+    def add_member(user, role_name)
+      # Create membership if it doesn't exist
+      memberships.find_or_create_by!(user: user)
+
+      # Assign the role
+      user.add_role(role_name, self)
+    end
   end
 
   class_methods do

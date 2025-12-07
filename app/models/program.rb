@@ -24,8 +24,9 @@ class Program < ApplicationRecord
   private
 
   def set_owner
-      memberships.create!(user: created_by_user, memberable: self)
-      created_by_user.add_role(:owner, self)
+    if created_by_user
+      add_member(created_by_user, :owner)
+    end
   end
 
   def owners

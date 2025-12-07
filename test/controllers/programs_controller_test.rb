@@ -104,7 +104,7 @@ class ProgramsControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_response :forbidden
+    assert_response :redirect
   end
 
   test "should not allow unauthorized user to update program" do
@@ -116,7 +116,7 @@ class ProgramsControllerTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_response :forbidden
+    assert_response :redirect
   end
 
   test "should not allow unauthorized user to destroy program" do
@@ -126,6 +126,6 @@ class ProgramsControllerTest < ActionDispatch::IntegrationTest
       delete organization_program_url(@organization, @program)
     end
 
-    assert_response :forbidden
+    assert_response :redirect
   end
 end

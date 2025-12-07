@@ -5,7 +5,7 @@ class ProgramsController < InertiaController
 
   # GET /organizations/:organization_id/programs
   def index
-    @programs = policy_scope(Program).where(organization: @organization)
+    @programs = @organization.programs
     render inertia: "Program/Index", props: {
       organization: OrganizationSerializer.one(@organization),
       programs: ProgramSerializer.many(@programs)

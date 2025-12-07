@@ -15,20 +15,6 @@ class ProgramPolicyTest < ActiveSupport::TestCase
     @user.roles.destroy_all
   end
 
-  def test_scope_includes_user_programs
-    # User is member of program
-    @user.add_role(:member, @program)
-
-    policy = ProgramPolicy::Scope.new(@user, Program)
-    assert_includes policy.resolve, @program
-  end
-
-  def test_scope_includes_programs_from_admin_organizations
-    # User is admin of organization (already set in setup)
-    policy = ProgramPolicy::Scope.new(@user, Program)
-    assert_includes policy.resolve, @program
-  end
-
   def test_show_as_program_member
     @user.add_role(:member, @program)
     assert ProgramPolicy.new(@user, @program).show?

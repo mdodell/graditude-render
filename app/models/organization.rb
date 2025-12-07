@@ -50,8 +50,7 @@ class Organization < ApplicationRecord
 
   def set_owner
     if created_by_user
-      memberships.create!(user: created_by_user, memberable: self)
-      created_by_user.add_role(:owner, self)
+      add_member(created_by_user, :owner)
     end
   end
 end

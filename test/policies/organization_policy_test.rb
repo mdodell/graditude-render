@@ -6,16 +6,27 @@ class OrganizationPolicyTest < ActiveSupport::TestCase
     @user = users(:lazaro_nixon)
   end
 
+  teardown do
+    @user.roles.destroy_all
+  end
+
   def test_scope
-    # All organizations should be visible
+    # User should see organizations they belong to
+    @organization.memberships.create!(user: @user)
+    @user.add_role(:member, @organization)
     policy = OrganizationPolicy::Scope.new(@user, Organization)
     assert_includes policy.resolve, @organization
   end
 
-  def test_show
-    # Anyone can view organizations
+  def test_show_as_member
+    # Members can view the organization
+    @user.add_role(:member, @organization)
     assert OrganizationPolicy.new(@user, @organization).show?
-    assert OrganizationPolicy.new(nil, @organization).show?
+  end
+
+  def test_show_unauthorized
+    # Non-members cannot view the organization
+    refute OrganizationPolicy.new(@user, @organization).show?
   end
 
   def test_create
@@ -25,13 +36,33 @@ class OrganizationPolicyTest < ActiveSupport::TestCase
     refute OrganizationPolicy.new(nil, new_org).create?
   end
 
-  def test_update
-    # Authenticated users can update organizations
+  def test_update_as_admin
+    # Admins can update organizations
+    @user.add_role(:admin, @organization)
     assert OrganizationPolicy.new(@user, @organization).update?
   end
 
-  def test_destroy
-    # Authenticated users can destroy organizations
+  def test_update_as_owner
+    # Owners can update organizations
+    @user.add_role(:owner, @organization)
+    assert OrganizationPolicy.new(@user, @organization).update?
+  end
+
+  def test_update_unauthorized
+    # Members cannot update organizations
+    @user.add_role(:member, @organization)
+    refute OrganizationPolicy.new(@user, @organization).update?
+  end
+
+  def test_destroy_as_owner
+    # Owners can destroy organizations
+    @user.add_role(:owner, @organization)
     assert OrganizationPolicy.new(@user, @organization).destroy?
+  end
+
+  def test_destroy_unauthorized
+    # Admins and members cannot destroy organizations
+    @user.add_role(:admin, @organization)
+    refute OrganizationPolicy.new(@user, @organization).destroy?
   end
 end

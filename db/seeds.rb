@@ -316,8 +316,7 @@ organizations.each do |org|
   users_to_add = available_users.sample(rand(2..4))
 
   users_to_add.each do |user|
-    org.memberships.find_or_create_by!(user: user)
-    user.add_role(:member, org)
+    org.add_member(user, :member)
     puts "✅ Added #{user.email} as member to #{org.name}"
   end
 end
@@ -343,8 +342,7 @@ organizations.each do |org|
       # Randomly assign as member or admin (80% member, 20% admin)
       role = rand < 0.8 ? :member : :admin
 
-      program.memberships.find_or_create_by!(user: member)
-      member.add_role(role, program)
+      program.add_member(member, role)
       puts "✅ Added #{member.email} as #{role} to #{program.name}"
     end
   end
