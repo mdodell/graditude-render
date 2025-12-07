@@ -1,4 +1,13 @@
 class Organization < ApplicationRecord
+  include Memberable, Invitable
+
+  resourcify
+
+  attr_accessor :created_by_user
+
+  # Valid roles for organization members
+  VALID_ROLES = %w[member admin owner].freeze
+
   has_and_belongs_to_many :colleges, join_table: :organization_colleges, dependent: :delete_all
 
   # Step validations for wicked wizard
@@ -14,9 +23,25 @@ class Organization < ApplicationRecord
   scope :without_colleges, -> { left_joins(:colleges).where(colleges: { id: nil }) }
   scope :by_college, ->(college) { joins(:colleges).where(colleges: { id: college.id }) }
 
+  def default_rolify_role
+    :member
+  end
+
   private
 
   def must_have_college
     errors.add(:colleges, "must be selected") if colleges.empty?
+  end
+
+  after_create :set_owner
+  after_create :add_owner_role
+
+  def set_owner
+    membership = memberships.create!(user: created_by_user, memberable: self)
+    created_by_user.add_role(:owner, self)
+  end
+
+  def owners
+    users.with_role(:owner, self)
   end
 end

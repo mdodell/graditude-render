@@ -193,6 +193,7 @@ organizations_data.each do |org_data|
   org = Organization.find_or_create_by!(domain: org_data[:domain]) do |o|
     o.name = org_data[:name]
     o.description = org_data[:description]
+    o.created_by_user = owner_user
   end
 
   # Associate colleges

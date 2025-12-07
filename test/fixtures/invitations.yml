@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  status: 1
+  invitable: one
+  invitable_type: Invitable
+
+two:
+  status: 1
+  invitable: two
+  invitable_type: Invitable

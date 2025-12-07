@@ -1,39 +1,48 @@
+# app/policies/organization_policy.rb
 class OrganizationPolicy < ApplicationPolicy
+  # Define constants for clarity
+  OWNER_ROLES = [ :owner ].freeze
+  ADMIN_ROLES = [ :admin, :owner ].freeze
+  MEMBER_ROLES = [ :member, :admin, :owner ].freeze
+
+  # --- General Access ---
+
   def index?
-    true # Anyone can view the list of organizations
+    # Anyone who is logged in can view the index of organizations (to see which they belong to)
+    user.present?
   end
 
   def show?
-    true # Anyone can view organization details
+    # Only users who are members of this specific organization can view it.
+    # This checks if the user has *any* of the defined roles scoped to the record (the organization).
+    user.has_role?(MEMBER_ROLES, record)
   end
+
+  # --- Creation ---
 
   def create?
-    user.present? # Only authenticated users can create organizations
+    # Only users who are logged in can create a new organization.
+    user.present?
   end
 
+  # --- Modification and Deletion ---
+
   def update?
-    user.present? # Only authenticated users can update organizations
+    # Only organization owners and admins can update the organization's details.
+    # This checks if the user has *one of* the roles in the ADMIN_ROLES array, scoped to the record.
+    user.has_role?(ADMIN_ROLES, record)
   end
 
   def destroy?
-    user.present? # Only authenticated users can delete organizations
+    # Only the owner of the organization can delete it.
+    user.has_role?(OWNER_ROLES, record)
   end
 
-  def invite_users?
-    user.present? # Only authenticated users can invite users
-  end
+  # --- Policy Scope (for index queries) ---
 
-  def manage_members?
-    user.present? # Only authenticated users can manage members
-  end
-
-  def view_members?
-    user.present? # Only authenticated users can view members
-  end
-
-  class Scope < ApplicationPolicy::Scope
+  class Scope < Scope
     def resolve
-      scope.all # For now, show all organizations. Could be filtered by membership later
+      user.organizations
     end
   end
 end

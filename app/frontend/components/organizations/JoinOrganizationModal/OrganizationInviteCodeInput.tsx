@@ -2,7 +2,7 @@ import { Button, Stack, TextInput } from '@mantine/core';
 import { useState } from 'react';
 import { router } from '@inertiajs/react';
 import { notifications } from '@mantine/notifications';
-import { invitation_acceptance_path } from '../../../routes';
+// import { invitation_acceptance_path } from '../../../routes';
 
 export function OrganizationInviteCodeInput() {
   const [inviteCode, setInviteCode] = useState('');
@@ -22,7 +22,9 @@ export function OrganizationInviteCodeInput() {
 
     try {
       router.put(
-        invitation_acceptance_path(inviteCode.trim()),
+        // TODO: Invitation acceptance path
+        '',
+        // invitation_acceptance_path(inviteCode.trim()),
         {},
         {
           onSuccess: () => {

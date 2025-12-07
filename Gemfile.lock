@@ -381,7 +381,7 @@ DEPENDENCIES
   puma (>= 5.0)
   pundit
   rails (~> 8.1.1)
-  rolify
+  rolify (~> 6.0)
   rubocop-rails-omakase
   selenium-webdriver
   solid_cache (~> 1.0)

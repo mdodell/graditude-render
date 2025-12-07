@@ -76,3 +76,5 @@ gem "wicked"
 
 # Pagination
 gem "pagy"
+
+gem "rolify", "~> 6.0"

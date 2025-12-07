@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  rolify
   has_secure_password
 
   generates_token_for :email_verification, expires_in: 2.days do
@@ -10,6 +11,9 @@ class User < ApplicationRecord
   end
 
   has_many :sessions, dependent: :destroy
+  has_many :memberships, dependent: :destroy
+
+  has_many :organizations, through: :memberships, source: :memberable, source_type: "Organization"
 
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, allow_nil: true, length: { minimum: 12 }

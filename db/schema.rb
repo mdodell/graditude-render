@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_01_054612) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_01_073359) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -19,6 +19,28 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_01_054612) do
     t.string "name"
     t.datetime "updated_at", null: false
     t.string "website"
+  end
+
+  create_table "invitations", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "invitable_id", null: false
+    t.string "invitable_type", null: false
+    t.integer "status"
+    t.string "token"
+    t.datetime "updated_at", null: false
+    t.index [ "invitable_type", "invitable_id" ], name: "index_invitations_on_invitable"
+    t.index [ "token" ], name: "index_invitations_on_token"
+  end
+
+  create_table "memberships", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "memberable_id", null: false
+    t.string "memberable_type", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index [ "memberable_type", "memberable_id" ], name: "index_memberships_on_memberable"
+    t.index [ "user_id", "memberable_type", "memberable_id" ], name: "index_unique_membership", unique: true
+    t.index [ "user_id" ], name: "index_memberships_on_user_id"
   end
 
   create_table "organization_colleges", id: false, force: :cascade do |t|
@@ -36,6 +58,16 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_01_054612) do
     t.string "name"
     t.datetime "updated_at", null: false
     t.index [ "domain" ], name: "index_organizations_on_domain", unique: true
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.bigint "resource_id"
+    t.string "resource_type"
+    t.datetime "updated_at", null: false
+    t.index [ "name", "resource_type", "resource_id" ], name: "index_roles_on_name_and_resource_type_and_resource_id"
+    t.index [ "resource_type", "resource_id" ], name: "index_roles_on_resource"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -56,6 +88,15 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_01_054612) do
     t.index [ "email" ], name: "index_users_on_email", unique: true
   end
 
+  create_table "users_roles", id: false, force: :cascade do |t|
+    t.bigint "role_id"
+    t.bigint "user_id"
+    t.index [ "role_id" ], name: "index_users_roles_on_role_id"
+    t.index [ "user_id", "role_id" ], name: "index_users_roles_on_user_id_and_role_id"
+    t.index [ "user_id" ], name: "index_users_roles_on_user_id"
+  end
+
+  add_foreign_key "memberships", "users"
   add_foreign_key "organization_colleges", "colleges"
   add_foreign_key "organization_colleges", "organizations"
   add_foreign_key "sessions", "users"

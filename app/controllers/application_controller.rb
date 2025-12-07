@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   before_action :set_current_request_details
   before_action :authenticate
 
+
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   private

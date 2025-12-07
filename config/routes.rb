@@ -6,7 +6,19 @@ Rails.application.routes.draw do
       patch "new/:id", to: "organization_wizards#update"
       put "new/:id", to: "organization_wizards#update"
     end
+
+    resources :invitations, only: [ :create ]
   end
+
+  # 1. GET route: Handles the initial click from the email.
+  get "invitations/:token",
+      to: "invitations#show",
+      as: :claim_invitation
+
+  # 2. PATCH route: (The handler for form submissions/direct API calls)
+  patch "invitations/:token",
+        to: "invitations#accept",
+        as: :update_invitation
 
   # Authentication routes
   get    "register", to: "registrations#new"

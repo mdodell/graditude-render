@@ -35,6 +35,7 @@ class OrganizationsController < InertiaController
   # POST /organizations or /organizations.json
   def create
     @organization = Organization.new(organization_params)
+    @organization.created_by_user = Current.user
     authorize @organization
 
     if @organization.save
